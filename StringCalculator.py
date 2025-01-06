@@ -3,6 +3,8 @@ def add(numbers) -> int:
     if not numbers:
        return 0
 
+
+    numbers = numbers.replace('\n',',')
     Parts = numbers.split(',')
     converted=[]
     for i in Parts:
@@ -24,6 +26,10 @@ class TestCalculator(unittest.TestCase):
 
     def test_twonumbers(self):
         result = add("5,1")
+        self.assertEqual(result,6)
+
+    def test_forwordslash(self):
+        result = add("1\n2,3")
         self.assertEqual(result,6)
 
 if __name__ == "main":
