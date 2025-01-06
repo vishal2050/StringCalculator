@@ -3,13 +3,19 @@ def add(numbers) -> int:
     if not numbers:
        return 0
 
+    delimiter = ','
+    if numbers.startswith("//"):
+        items = numbers.split('//')
+        delimiter=items[1][0]
 
-    numbers = numbers.replace('\n',',')
-    Parts = numbers.split(',')
+        numbers= numbers.replace('//'+delimiter,'')
+
+    numbers = numbers.replace('\n',delimiter)
+    Parts = numbers.split(delimiter)
     converted=[]
     for i in Parts:
-        converted.append(int(i))
-
+        if i != '':
+           converted.append(int(i))
 
     return sum(converted)
 
@@ -31,6 +37,9 @@ class TestCalculator(unittest.TestCase):
     def test_forwordslash(self):
         result = add("1\n2,3")
         self.assertEqual(result,6)
+    def test_delimiter_change(self):
+        result = add("//;\n1;2")
+        self.assertEqual(result,3)
 
 if __name__ == "main":
     unittest.main()
