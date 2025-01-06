@@ -13,9 +13,17 @@ def add(numbers) -> int:
     numbers = numbers.replace('\n',delimiter)
     Parts = numbers.split(delimiter)
     converted=[]
+    negative = []
     for i in Parts:
         if i != '':
-           converted.append(int(i))
+           value= int(i)
+           if value<0:
+               negative.append(value)
+           converted.append(value)
+
+    if negative:
+        print(f"negative numbers not allowed {negative}")
+        raise ValueError(f"negative numbers not allowed {negative}")
 
     return sum(converted)
 
@@ -40,6 +48,11 @@ class TestCalculator(unittest.TestCase):
     def test_delimiter_change(self):
         result = add("//;\n1;2")
         self.assertEqual(result,3)
+
+    def test_negative(self):
+        with self.assertRaises(ValueError):
+             add("-2,-3,4,5,-3")
+
 
 if __name__ == "main":
     unittest.main()
